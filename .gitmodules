@@ -1,0 +1,24 @@
+[submodule "riscv-fesvr"]
+	path = riscv-fesvr
+	url = https://github.com/riscv/riscv-fesvr.git
+[submodule "riscv-pk"]
+	path = riscv-pk
+	url = https://github.com/riscv/riscv-pk.git
+[submodule "riscv-tests"]
+	path = riscv-tests
+	url = https://github.com/riscv/riscv-tests.git
+[submodule "riscv-isa-sim"]
+	path = riscv-isa-sim
+	url = https://github.com/sherry151/riscv-isa-sim.git
+[submodule "anycore-riscv-src"]
+	path = anycore-riscv-src
+	url = https://github.com/anycore/anycore-riscv-src.git
+[submodule "anycore-riscv-tests"]
+	path = anycore-riscv-tests
+	url = https://github.com/anycore/anycore-riscv-tests.git
+[submodule "riscv-dpi"]
+	path = riscv-dpi
+	url = https://github.com/anycore/riscv-dpi.git
+[submodule "anycore-riscv-synth"]
+	path = anycore-riscv-synth
+	url = https://github.com/anycore/anycore-riscv-synth.git
