@@ -9,7 +9,7 @@
 	url = https://github.com/riscv/riscv-tests.git
 [submodule "riscv-isa-sim"]
 	path = riscv-isa-sim
-	url = https://github.com/sherry151/riscv-isa-sim.git
+	url = https://github.com/anycore/riscv-isa-sim.git
 [submodule "anycore-riscv-src"]
 	path = anycore-riscv-src
 	url = https://github.com/anycore/anycore-riscv-src.git
@@ -22,3 +22,6 @@
 [submodule "anycore-riscv-synth"]
 	path = anycore-riscv-synth
 	url = https://github.com/anycore/anycore-riscv-synth.git
+[submodule "riscv-gnu-toolchain"]
+	path = riscv-gnu-toolchain
+	url = https://github.com/riscv/riscv-gnu-toolchain.git
