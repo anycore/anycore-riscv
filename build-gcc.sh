@@ -7,10 +7,10 @@
 
 
 ### If using NCSU RHEL-6 machine
-source scl_source enable devtoolset-3
+#source scl_source enable devtoolset-3
 
-#Path to the directory where the compiled RISC-V tools should be installed
-RISCV_INSTALL=$PWD/install
+#Path to the directory where the compiled RISC-V GCC should be installed
+RISCV_GCC_INSTALL=$PWD/install
 
 ### Set the correct compiler path if using a custom GCC build
 #GCC_PATH=/afs/eos.ncsu.edu/lockers/research/ece/ericro/common/gcc492_64
@@ -30,17 +30,10 @@ RISCV_INSTALL=$PWD/install
 #export CFLAGS
 #export CXXFLAGS
 
-. build.common
-
 if [ ! `which riscv64-unknown-elf-gcc` ]
-then
-  echo "riscv64-unknown-elf-gcc doesn't appear to be installed; use the full-on build.sh"
-  exit 1
-fi
+echo "Starting RISC-V GNU Toolchain build process"
 
-echo "Starting RISC-V Toolchain build process"
-
-build_project riscv-gnu-toolchain --prefix=$RISCV
+build_project riscv-gnu-toolchain --prefix=$RISCV_GCC_INSTALL
 
 
-echo -e "\\nRISC-V Toolchain installation completed!"
+echo -e "\\nRISC-V GNU Toolchain installation completed!"
