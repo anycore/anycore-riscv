@@ -1,13 +1,11 @@
-anycore-riscv
+#User Guide for AnyCore RISC-V
 ===========================================================================
-
 
 1. [Quickstart](#quickstart)
 2. [Tour of The Sources](#tour)
 3. [Build the Tools](#build-tools)
-4. [Run RTL Simulations](#rtl-sim)
-5. [Run Functional Simulator](#functional-sim)
-6. [Commit Changes in Submodules](#commit-submodules)
+4. [AnyCore Test Infrastructure](#test-infra)
+5. [Commit Changes in Submodules](#commit-submodules)
 
 # <a name="quickstart"></a>Quickstart
 
@@ -17,49 +15,59 @@ Check the version your git by using:
 
 #####If your git version is above 1.7.9
 
-	% git clone --recursive https://github.ncsu.edu/AnyCore/anycore-riscv.git
+	% git clone --recursive https://github.com/anycore/anycore-riscv.git
 
-#####If you are using git version before 1.7.9, you must specify your username for  https://github.ncsu.edu
+#####If you are using git version before 1.7.9, you might need to specify your username
 
 ######If using C-Shell:
 
 	% set GIT_USER_NAME=<username>    
-	% git clone https://`echo $GIT_USER_NAME`@github.ncsu.edu/AnyCore/anycore-riscv.git
+	% git clone https://`echo $GIT_USER_NAME`@github.com/anycore/anycore-riscv.git
 	% cd anycore-riscv/
-	% sed -i -- 's/github\.ncsu/'`echo $GIT_USER_NAME`'@github\.ncsu/g' .gitmodules 
+	% sed -i -- 's/github/'`echo $GIT_USER_NAME`'@github/g' .gitmodules 
 	% git submodule update --init --recursive
 	
 ######If using Bash:	
 
 	$ export GIT_USER_NAME=<username>    
-	$ git clone https://`echo $GIT_USER_NAME`@github.ncsu.edu/AnyCore/anycore-riscv.git
+	$ git clone https://`echo $GIT_USER_NAME`@github.com/anycore/anycore-riscv.git
 	$ cd anycore-riscv/
-	$ sed -i -- 's/github\.ncsu/'`echo $GIT_USER_NAME`'@github\.ncsu/g' .gitmodules 
+	$ sed -i -- 's/github/'`echo $GIT_USER_NAME`'@github/g' .gitmodules 
 	$ git submodule update --init --recursive
 
 
 #####WARNING:
-If you just want to use the codebase to run tests, you are all set to move on to [Build The Tools.]#build-tools). However, if you think that you might need to modify code in any of the submodules and want to commit them back to upstream repo, read the section on [Committing Submodules](#commit-submodules) very carefully. You have been warned! Unless you have a very good reason to checkout riscv-pk, riscv-fesvr, and riscv-isa-sim, do not checkout these repos. The Anycore toolset is tied to a specific version of these repos and checking them out will mess up the dependncy and the toolset will either fail to build or run correctly.
+If you just want to use the codebase to run tests, you are all set to move on to 
+[Build The Tools.]#build-tools). However, if you think that you might need to modify 
+code in any of the submodules and want to commit them back to upstream repo, read the 
+section on [Committing Submodules](#commit-submodules) very carefully. You have been 
+warned! Unless you have a very good reason to checkout riscv-pk, riscv-fesvr, 
+and riscv-isa-sim, do not checkout these repos. The Anycore toolset is tied to a 
+specific version of these repos and checking them out will mess up the dependncy and 
+the toolset will either fail to build or run correctly.
 
 # <a name="build-tools"></a>Build the Tools
-The tools need GCC version 4.9.2 or above to be built correctly. If you are using the latest version of Ubuntu or Fedora, you are good to go. If you are using RHEL-6 or below, you must  use the precompiled version of gcc-4.9.2 provided by RHEL devtoolset-3. The build scripts automatically use devtoolset-3. If you want to use a different GCC you must set the appropriate environment variables in build-all.sh . Things that need to be done to use a different toolchain is in the notes.
-
-<!--
-The "spike" architectural simulator is built and installed in anycore-riscv/install_spike. You should add this location (even if the directory does not exist yet) to your path (in ~.mycshrc or ~/.bashrc) since building rest of the toolset requires spike to be searched and found in the path. If you do not know how to add a new path to ~/.mycshrc or ~/.bashrc , read http://www.cyberciti.biz/faq/unix-linux-adding-path/ for a nice tutorial. You should source the new ~/.mycshrc OR ~/.bashrc for the changes to take effect.
-
-After adding "install_spike" to the path, execute the folloing commands:
--->
+The tools need GCC version 4.9.2 or above to be built correctly. If you are using the 
+latest version of Ubuntu or Fedora, you are good to go. If you are using RHEL-6 or below, 
+you must  use the precompiled version of gcc-4.9.2 provided by RHEL devtoolset-3. 
+The build scripts automatically use devtoolset-3. If you want to use a different GCC you 
+must set the appropriate environment variables in build-all.sh . Things that need to be 
+done to use a different toolchain is in the notes.
 
 Now, execute the folloing commands:
 
 	% cd anycore-riscv
 	% vi build.common   #Change the number of jobs in this filebased on your build machine
-	% ./build-all.sh
+	% ./build-gcc.sh    # If you do not already have the RISC-V cross compiler
+	% ./build-all.sh    # To compile rest of the tools
 	
-This will build all the necessary tools and install them in anycore-riscv/install. You should add this locations to your path (in ~.mycshrc or ~/.bashrc) so that it is easy to use the tools.
+This will build all the necessary tools and install them in anycore-riscv/install. You 
+should add this locations to your path (in ~.mycshrc or ~/.bashrc) so that it is easy to use the tools.
 
 ######NOTE:
-If using the gcc-4.9.2 installed on your system or a custom gcc, edit build-all.ch and modify GCC_PATH and GCC_SUFFIX variables to match your GCC's path and suffix. For installed GCCs, the path will probably be /usr/bin and suffix will be "" (blank).
+If using the gcc-4.9.2 installed on your system or a custom gcc, edit build-all.ch and 
+modify GCC_PATH and GCC_SUFFIX variables to match your GCC's path and suffix. For installed 
+GCCs, the path will probably be /usr/bin and suffix will be "" (blank).
 
 # <a name="tour"></a>Tour of the Sources
 
@@ -78,25 +86,28 @@ system calls generated by code built and linked with the RISC-V Newlib port
 *   `riscv-tests`, a set of assembly tests
 and benchmarks
 *   `anycore-riscv-src`, The RTL for AnyCore-RISCV
-*   `anycore-tests`, a set of assembly tests
+*   `anycore-riscv-tests`, The AnyCore test environment to create checkpoints of benchmarks and run tests
 *   `riscv-dpi`, DPI code needed for RTL simualtions and checking committed instruuctions. 
 and benchmarks along with simulation infrastructure for 
 running RTL test.
 
-# <a name="rtl-sim"></a>Run RTL Simulations
+# <a name="test-infra"></a>AnyCore Test Infrastructure
 
-The simulations are run in a separate scratch directory to prevent it from using up AFS space. The path to this scratch space should be specified in the Makefile or overridden from the command line as follows (`NOTE`: You must change the SCRATCH_SPACE variable in the Makefile to point to a valid location):
+The submodule anycore-riscv-test contains a make driven infrastructure for easily running tests. It can use parallel make to run
+tests in parallel, making it quite fast and efficient. The infrastructure can be used to run RTL tests, gate-level simulations, and 
+tests on the Spike functional simulator. It supports both microbenchmarks and full benchmarks such as SPEC (Read about building SPEC 
+benchmarks at https://github.com/anycore/Speckle). The infrastructure also supports gather <a href=https://cseweb.ucsd.edu/~calder/simpoint/>Simpoints</a>
+and generate benchmark checkpoints for faster simulations. More details on how to use the infrastructure can be found in 
+https://github.com/anycore/anycore-riscv-tests/blob/master/README.md .
 
-    % make rtl SPEC_SRC_DIR="<Path to SPEC directory>" SCRATCH_SPACE="<Path to scratch space>"
 
-Simulation runs are done in SCRATCH_SPACE/anycore_micro_test and appropriate test directories are created in this hierarchy.
+## <a name="functional-sim"></a>Run Functional Simulator (Spike)
 
-`NOTE`: You must change the VERILOG_SRC pnd the RISC_INSTALL_DIR  in rtl.mk to point to the appropriate paths.
+Write a short C program and name it hello.c.  Then, compile it into a RISC-V. 
+If you are at NCSU, the comross compiler can be added using 'add risv'. Otherwise, 
+you need to compile your own cross compiler by following [these instructions] (https://github.com/riscv/anycore-riscv/blob/master/README.md)
 
-# <a name="functional-sim"></a>Run Functional Simulator
-
-Write a short C program and name it hello.c.  Then, compile it into a RISC-V. If you are at NCSU, the comross compiler can be added using 'add risv'. Otherwise, you need to compile your own cross compiler. by following [these instructions] (https://github.com/riscv/anycore-riscv/blob/master/README.md)
-ELF binary named hello:
+Build the ELF binary named hello:
 
     % add riscv
     % riscv64-unknown-elf-gcc -o hello hello.c
@@ -105,7 +116,25 @@ Now you can simulate the program atop the proxy kernel:
 
     % spike pk -c hello
 
+This can also be done using the test infrastructure by adding a testcase for "hello world" and running:
+
+    % cd anycore-riscv-tests 
+    % make spike
+
 For more information, visit https://github.com/sherry151/riscv-isa-sim/blob/master/README.md
+
+## <a name="rtl-sim"></a>Run RTL Simulations
+
+The simulations are run in a separate scratch directory to prevent it from using up AFS/NFS space. 
+The path to this scratch space should be specified in the Makefile or overridden from the command 
+line as follows (`NOTE`: You must change the SCRATCH_SPACE variable in the Makefile to point to a valid location):
+
+    % cd anycore-riscv-tests 
+    % make rtl 
+
+Simulation runs are done in SCRATCH_SPACE/anycore_rtl_test and appropriate test directories are created in this hierarchy.
+More usage instructions are in https://github.com/anycore/anycore-riscv-tests/blob/master/README.md .
+
 
 # <a name="commit-submodules"></a>Commit Changes in Submodules
 
