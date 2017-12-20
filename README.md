@@ -1,4 +1,4 @@
-#User Guide for AnyCore RISC-V
+User Guide for AnyCore RISC-V
 ===========================================================================
 
 1. [Quickstart](#quickstart)
