@@ -7,7 +7,7 @@
 
 
 ### If using NCSU RHEL-6 machine
-source scl_source enable devtoolset-3
+#source scl_source enable devtoolset-3
 
 #Path to the directory where the compiled RISC-V tools should be installed
 RISCV_INSTALL=$PWD/install
@@ -41,10 +41,10 @@ fi
 echo "Starting RISC-V Toolchain build process"
 
 build_project riscv-fesvr --prefix=$RISCV_INSTALL
-#build_project riscv-isa-sim --prefix=$RISCV_INSTALL --with-fesvr=$RISCV_INSTALL 
+build_project riscv-isa-sim --prefix=$RISCV_INSTALL --with-fesvr=$RISCV_INSTALL 
 #build_project riscv-isa-sim --prefix=$RISCV_INSTALL --with-fesvr=$RISCV_INSTALL --enable-simpoint
 CC=riscv64-unknown-elf-gcc CFLAGS="-msoft-float" ASFLAGS="-msoft-float" build_project riscv-pk --prefix=$RISCV_INSTALL/riscv64-unknown-elf --host=riscv --disable-atomics
-#build_project riscv-dpi --prefix=$RISCV_INSTALL --with-fesvr=$RISCV_INSTALL --enable-checker 
+build_project riscv-dpi --prefix=$RISCV_INSTALL --with-fesvr=$RISCV_INSTALL --enable-checker 
 #build_project riscv-dpi --prefix=$RISCV_INSTALL --with-fesvr=$RISCV_INSTALL --enable-checker --enable-micro-debug
 
 
